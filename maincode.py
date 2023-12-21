@@ -8,6 +8,7 @@ import requests
 import json
 import openai
 
+# Function to handle user queries. It combines user queries with the document text and sends them to the OpenAI API.
 def handle_query(query, document_texts, api_key, model):
     # Join all document texts for the query context
     combined_text = "\n\n".join(document_texts)
@@ -15,6 +16,7 @@ def handle_query(query, document_texts, api_key, model):
     response = get_openai_chat_response(api_key, model, prompt, max_tokens=1000)
     return response
 
+# Function to extract text from a PDF file.
 def extract_text_from_pdf(file_stream):
     reader = PdfReader(file_stream)
     text = ""
@@ -22,11 +24,13 @@ def extract_text_from_pdf(file_stream):
         text += page.extract_text() + "\n"
     return text
 
+# Function to extract text from a DOCX file.
 def extract_text_from_docx(file_stream):
     doc = docx.Document(file_stream)
     text = [paragraph.text for paragraph in doc.paragraphs]
     return '\n'.join(text)
 
+# Function to get a response from the OpenAI chat model.
 def get_openai_chat_response(api_key, model, prompt, max_tokens):
     headers = {
         'Content-Type': 'application/json',
@@ -40,6 +44,7 @@ def get_openai_chat_response(api_key, model, prompt, max_tokens):
     response = requests.post('https://api.openai.com/v1/chat/completions', headers=headers, json=data)
     return response.json()
 
+# The main function of the script, setting up the Streamlit interface and handling the application logic.
 def main():
     st.title("Nursing Resume Assistant")
 

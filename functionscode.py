@@ -2,6 +2,10 @@ import json
 import os
 import openai
 
+
+# This function creates an OpenAI assistant, potentially using an existing assistant ID or creating a new one.
+# It takes parameters for the OpenAI client, assistant name, description, and optionally a training data file and model.
+# The function saves the assistant's ID in a JSON file for later use.
 def create_assistant(client, name, description, training_data_file='/Users/calebpelkey/Desktop/Nursing_Knowledge.docx', model='gpt-4-1106-preview'):
     assistant_file_path = 'assistant.json'
     assistant_id = None
